@@ -1,0 +1,8 @@
+.Select-control {
+    background-color: #f5f5f5; /* Background color */
+    color: #000000; /* Text color */
+}
+
+.Select-menu-outer {
+    background-color: #f5f5f5; /* Background color of the dropdown menu */
+}

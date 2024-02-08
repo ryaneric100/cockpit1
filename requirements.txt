@@ -1,0 +1,14 @@
+gunicorn
+config==0.5.1
+dash==2.15.0
+dash_ag_grid==31.0.1
+dash_bootstrap_components==1.5.0
+eod==0.2.1
+numpy==1.26.4
+pandas==2.2.0
+plotly==5.18.0
+pymysql==1.1.0
+python-dotenv==1.0.1
+python_dateutil==2.8.2
+SQLAlchemy==2.0.25
+yfinance==0.2.36
