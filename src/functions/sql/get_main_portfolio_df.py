@@ -18,7 +18,7 @@ io.renderers.default='browser'
 
 def get_main_portfolio_df(table_name):
 
-    load_dotenv("config.env")
+    load_dotenv("/etc/secrets/config.env")
     SQL_ENGINE  = os.getenv('SQL_ENGINE')
           
     # testing with csv
