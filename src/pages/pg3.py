@@ -14,7 +14,7 @@ from functions.sql.get_main_portfolio_df import   get_main_portfolio_df
 
 #strat_name = 'dc_ai_ptf'
 strat_name = 'dc_rs_short_ptf'
-strat_name = 'swiss_equity_plus_sli_ptf'
+#strat_name = 'swiss_equity_plus_sli_ptf'
 max_exposure = 1
 
 
@@ -57,6 +57,7 @@ layout = html.Div(
     ]
     ),
   
+ 
  
   ]
 )

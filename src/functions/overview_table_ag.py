@@ -13,10 +13,10 @@ from dotenv import load_dotenv
 
 
 
-#load_dotenv("C:\DATA\CLOUD\PROJECTS\COCKPIT_DASH\config.env")
-load_dotenv("/etc/secrets/config.env")
+# load_dotenv("C:\DC_PYTHON\DC_COCKPIT\config.env")
+# #load_dotenv("/etc/secrets/config.env")
 
-SQL_ENGINE  = os.getenv('SQL_ENGINE')
+# SQL_ENGINE  = os.getenv('SQL_ENGINE')
 
 
 
@@ -24,10 +24,28 @@ SQL_ENGINE  = os.getenv('SQL_ENGINE')
 def overview_table_ag(flag):
     
     
+        #load_dotenv("C:\DC_PYTHON\DC_COCKPIT\config.env")
+        load_dotenv("/etc/secrets/config.env")
+
+        SQL_FLAG  = os.getenv('SQL_FLAG')
+        
+        if int(SQL_FLAG) == 1:
+            SQL_ENGINE  = os.getenv('SQL_RENDER')
+        else:
+            SQL_ENGINE  = os.getenv('SQL_ENGINE')
+            
+
+        #SQL_ENGINE  = os.getenv('SQL_ENGINE')
+    
+    
         if flag == 1:
 
             cnx = create_engine(SQL_ENGINE) 
             df = pd.read_sql('SELECT * FROM overview_table_cockpit_dash', cnx) #read the entire table
+            
+            # Convert column names to uppercase
+            df = df.rename(columns=lambda x: x.upper())
+            
             print(df)
         
         # filename = 'overview.csv'
@@ -50,8 +68,8 @@ def overview_table_ag(flag):
         df['PORTFOLIO'] = [create_link(url,solution) for url,solution in zip(df["URL"],df["PORTFOLIO"])]
         df.drop(['URL'], axis = 1, inplace = True)
     
-        df['TRADE ALERT'] = df['TRADE ALERT'].apply(lambda x: '🔴' if x > 0 else ' ')
-        df['DATA ALERT'] = df['DATA ALERT'].apply(lambda x: '🔔' if x > 0 else ' ')
+        df['TRADE_ALERT'] = df['TRADE_ALERT'].apply(lambda x: '🔴' if x > 0 else ' ')
+        df['DATA_ALERT'] = df['DATA_ALERT'].apply(lambda x: '🔔' if x > 0 else ' ')
         
         print(df)
         
@@ -113,14 +131,14 @@ def overview_table_ag(flag):
             },
             {
                 "headerName": "Trade Alert",
-                "field": "TRADE ALERT",
+                "field": "TRADE_ALERT",
                 #"dangerously_allow_code": True,
                 "cellRenderer": "markdown",
                 "type": "centerAligned",
             },
             {
                 "headerName": "Data Alert",
-                "field": "DATA ALERT",
+                "field": "DATA_ALERT",
                 "cellRenderer": "markdown",
                 #"dangerously_allow_html": True,
                 "type": "centerAligned",
