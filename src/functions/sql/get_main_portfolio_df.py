@@ -18,8 +18,8 @@ io.renderers.default='browser'
 
 def get_main_portfolio_df(table_name):
 
-    #load_dotenv("C:\DC_PYTHON\DC_COCKPIT\config.env")
-    load_dotenv("/etc/secrets/config.env")
+    load_dotenv("C:\DC_PYTHON\DC_COCKPIT\config.env")
+    #load_dotenv("/etc/secrets/config.env")
     
     SQL_FLAG  = os.getenv('SQL_FLAG')
     

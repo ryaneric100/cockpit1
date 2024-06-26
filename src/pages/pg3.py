@@ -3,6 +3,7 @@ from dash import  html, callback, Output, Input
 import dash_bootstrap_components as dbc
 from  functions.trading import trading
 from  functions.positions import positions
+from  functions.statistics import statistics
 from  functions.portfolio import portfolio
 from  functions.allocations import  allocations
 from  functions.contributions import contributions
@@ -22,11 +23,11 @@ max_exposure = 1
 df = get_main_portfolio_df(strat_name)
 
 dash.register_page(__name__,
-                   path='/portfolio1',
+                   path='/dc_rs_short_ptf',
                    name='Portfolio1',
                    title='Portfolio',
-                   image='pg3.png',
-                   description='Learn all about the heatmap.'
+                   #image='pg3.png',
+                   #description='Learn all about the heatmap.'
 )
 
 
@@ -43,6 +44,7 @@ layout = html.Div(
                 [
                     dbc.Tab(label="PORTFOLIO", tab_id="tab-ptf"),
                     dbc.Tab(label="POSITIONS", tab_id="tab-positions"),
+                    dbc.Tab(label="STATISTICS", tab_id="tab-stats"),
                     dbc.Tab(label="ALLOCATIONS", tab_id="tab-allocations"),
                     dbc.Tab(label="CONTRIBUTIONS", tab_id="tab-contributions"),
                     dbc.Tab(label="TRADING", tab_id="tab-trading"),
@@ -68,10 +70,15 @@ layout = html.Div(
 )
 
 def render_content(active_tab):
+    
+    #df = get_main_portfolio_df(strat_name)
+    
     if active_tab == 'tab-ptf':
         return portfolio(df)
     elif active_tab == 'tab-positions':
         return positions(df)
+    elif active_tab == 'tab-stats':
+        return statistics(df)
     elif active_tab == 'tab-allocations':
         return allocations(df)
     elif active_tab == 'tab-contributions':

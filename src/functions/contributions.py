@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Dec 26 16:33:16 2022
+Created on June 2024
 
-@author: DCHELD
+@author: Ryan Held 
 """
+
 from dash import Input, Output, html, dcc, State
 import pandas as pd
 import dash
@@ -11,6 +12,7 @@ import dash_bootstrap_components as dbc
 import plotly.express as px
 from functions.get_contributions_from_df import  get_contributions_from_df
 from functions.get_color_dict import  get_color_dict
+from io import StringIO
 
 
 def contributions(df):
@@ -75,7 +77,7 @@ def update_charts(selected_category,json_data):
     #· get all colrs from dictionary:     
     color_dict = get_color_dict()        
         
-    #df = get_main_portfolio_df('dc_rs_short_ptf')
+    json_data = StringIO(json_data)
     df = pd.read_json(json_data, orient='split')
    
 
@@ -83,32 +85,32 @@ def update_charts(selected_category,json_data):
 
     #bar_fig = px.bar(x=df_contribution.values, y=df_contribution.index, orientation='h', color=df_contribution.index)
     bar_fig = px.bar(x=df_contribution.values, y=df_contribution.index, orientation='h', color=df_contribution.index, color_discrete_map=color_dict) # dict(zip(df_contr_sect.index, colors))
-    bar_fig.update_xaxes(title_text='Custom X-axis Title')
-    bar_fig.update_yaxes(title_text='Custom Y-axis Title')
+    bar_fig.update_xaxes(title_text='Contribution %')
+    bar_fig.update_yaxes(title_text='')
     
     
     df_contr_pos = get_contributions_from_df(df,'TICKER',period)
 
     #bar_fig = px.bar(x=df_contribution.values, y=df_contribution.index, orientation='h', color=df_contribution.index)
     bar_fig_pos = px.bar(x=df_contr_pos.values, y=df_contr_pos.index, orientation='h', color=df_contr_pos.index, color_discrete_map=color_dict)
-    bar_fig_pos.update_xaxes(title_text='Custom X-axis Title')
-    bar_fig_pos.update_yaxes(title_text='Custom Y-axis Title')
+    bar_fig_pos.update_xaxes(title_text='Contribution %')
+    bar_fig_pos.update_yaxes(title_text='')
         
 
     df_contr_fx = get_contributions_from_df(df,'SECTOR',period)
 
     #bar_fig = px.bar(x=df_contribution.values, y=df_contribution.index, orientation='h', color=df_contribution.index)
     bar_fig_fx = px.bar(x=df_contr_fx.values, y=df_contr_fx.index, orientation='h', color=df_contr_fx.index, color_discrete_map=color_dict)
-    bar_fig_fx.update_xaxes(title_text='Custom X-axis Title')
-    bar_fig_fx.update_yaxes(title_text='Custom Y-axis Title')
+    bar_fig_fx.update_xaxes(title_text='Contribution %')
+    bar_fig_fx.update_yaxes(title_text='')
 
 
     df_contr_sect = get_contributions_from_df(df,'FX',period)
 
     #bar_fig = px.bar(x=df_contribution.values, y=df_contribution.index, orientation='h', color=df_contribution.index)
     bar_fig_sect = px.bar(x=df_contr_sect.values, y=df_contr_sect.index, orientation='h', color=df_contr_sect.index, color_discrete_map=color_dict)
-    bar_fig_sect.update_xaxes(title_text='Custom X-axis Title')
-    bar_fig_sect.update_yaxes(title_text='Custom Y-axis Title')
+    bar_fig_sect.update_xaxes(title_text='Contribution %')
+    bar_fig_sect.update_yaxes(title_text='')
 
 
     return bar_fig, bar_fig_pos, bar_fig_fx, bar_fig_sect

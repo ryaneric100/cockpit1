@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Dec 26 16:33:16 2022
+Created on June 2024
 
-@author: DCHELD
+@author: Ryan Held 
 """
 
-# import warnings
-# warnings.simplefilter(action="ignore", category=FutureWarning)
 
 from dash import Input, Output, html, dcc, ALL
 import pandas as pd
@@ -50,10 +48,7 @@ def positions(df):
                 "headerName": "Name",
                 "field": "NAME",
             },
-            # {
-            #     "headerName": "Tickers EOD",
-            #     "field": "TICKER",
-            # },
+   
             
             {
                 "headerName": "ISIN",
@@ -91,14 +86,7 @@ def positions(df):
             },
             
             
-            # {
-            #     "headerName": "Bought",
-            #     "field": "ASSET_CLASS",
-            # },
-            # {
-            #     "headerName": "Return",
-            #     "field": "ASSET_CLASS",
-            # },
+    
            
         ]
         
@@ -109,7 +97,7 @@ def positions(df):
                 dag.AgGrid(
                   id="position_table",
                   #className="ag-theme-alpine-dark",
-                  #className="ag-theme-alpine borders",
+                  className="ag-theme-alpine",
                   columnDefs= columnDefs, #[{"headerName": i, "field": i, "cellRenderer": "markdown"} for i in df_positions.columns],
                   rowData=df_positions.to_dict("records"),
                   columnSize="sizeToFit",
@@ -189,10 +177,8 @@ def positions(df):
             [
                dbc.Row([dbc.Col(position_table)]), 
                html.Hr(),
-               dbc.Row([dbc.Col(radio_item),dbc.Col(chart_item)]), 
-               #Dgenerate_layout(10)
-               #dbc.Row([dcc.Graph(id={'type': 'dynamic-graph', 'index': i}) for i in range(number_of_charts)])
-               dbc.Row(create_charts(number_of_charts,bb_tickers))
+              # dbc.Row([dbc.Col(radio_item),dbc.Col(chart_item)]), 
+              # dbc.Row(create_charts(number_of_charts,bb_tickers))
               # dbc.Row([dbc.Col(table)]) 
             ]
         )

@@ -10,8 +10,6 @@ import numpy as np
 
 def get_stats_table_from_df(df):
 
- 
-
     # PTF_VAMI
     
     # # Current date (or the latest date in your dataset)
@@ -32,7 +30,6 @@ def get_stats_table_from_df(df):
     # # print(f"MTD Performance: {mtd_performance:.2f}%")
 
 
-
     # # create a dummy dataframe: 
     
     # # initialize list of lists 
@@ -40,24 +37,37 @@ def get_stats_table_from_df(df):
       
     # # Create the pandas DataFrame 
     # stats_df = pd.DataFrame(data, columns=['Stat', 'Ptf', 'BMK']) 
-      
-   
-# Assuming df is your DataFrame with 'price' column and datetime index
+         
+    # Assuming df is your DataFrame with 'price' column and datetime index
 
     # Calculate daily returns
-    df['daily_returns'] = df['PTF_VAMI'].pct_change()
+    # df['daily_returns'] = df['PTF_VAMI'].pct_change()
     
     # YTD Return
-    ytd_return = df['PTF_VAMI'].loc[df.index.year == df.index.year.max()].iloc[-1] / df['PTF_VAMI'].loc[df.index.year == df.index.year.max()].iloc[0] - 1
+    ytd_return = df['PTF_VAMI'].loc[df.index.year == df.index.year.max()].iloc[-1] / df['PTF_VAMI'].loc[df.index.year == df.index.year.max()-1].iloc[-1] - 1
+    ytd_return_bmk = df['BMK_VAMI'].loc[df.index.year == df.index.year.max()].iloc[-1] / df['BMK_VAMI'].loc[df.index.year == df.index.year.max()-1].iloc[-1] - 1
+    
     
     # MTD Return
-    mtd_return = df['PTF_VAMI'].loc[df.index.month == df.index.month.max()].iloc[-1] / df['PTF_VAMI'].loc[df.index.month == df.index.month.max()].iloc[0] - 1
+    # get last month: 
+    last_month = df.index[-1].month-1
+    if last_month == 0:
+        last_month = 12
+        
+    # actual month: 
+    # get last entry and then the month: df.index[-1].month    
+    
+    mtd_return = df['PTF_VAMI'].loc[df.index.month == df.index[-1].month].iloc[-1] / df['PTF_VAMI'].loc[df.index.month == last_month].iloc[-1] - 1
+    mtd_return_bmk = df['BMK_VAMI'].loc[df.index.month == df.index[-1].month].iloc[-1] / df['BMK_VAMI'].loc[df.index.month == last_month].iloc[-1] - 1
+    
     
     # Return Since Start
     return_since_start = df['PTF_VAMI'].iloc[-1] / df['PTF_VAMI'].iloc[0] - 1
+    return_since_start_bmk = df['BMK_VAMI'].iloc[-1] / df['BMK_VAMI'].iloc[0] - 1
     
     # Volatility (Annualized)
     volatility = df['PTF_RET'].std() * np.sqrt(252)
+    volatility_bmk = df['BMK_RET'].std() * np.sqrt(252)
     
     # Maximum Drawdown
     rolling_max = df['PTF_VAMI'].cummax()
@@ -66,6 +76,9 @@ def get_stats_table_from_df(df):
     
     # Sharpe Ratio (Assuming risk-free rate is 0 for simplicity)
     sharpe_ratio = df['PTF_RET'].mean() / df['PTF_RET'].std() * np.sqrt(252)
+    sharpe_ratio_bmk = df['BMK_RET'].mean() / df['BMK_RET'].std() * np.sqrt(252)
+    
+    
     
     # Print the statistics
     print(f"YTD Return: {ytd_return:.2%}")
@@ -81,9 +94,9 @@ def get_stats_table_from_df(df):
     # create a dummy dataframe: 
     
     # initialize list of lists 
-    data = [['YTD', ytd_return,ytd_return], ['MTD', mtd_return, mtd_return], 
-            ['Start', return_since_start, return_since_start],
-            ['Volatility', volatility, volatility],
+    data = [['YTD', ytd_return,ytd_return_bmk], ['MTD', mtd_return, mtd_return_bmk], 
+            ['Start', return_since_start, return_since_start_bmk],
+            ['Volatility', volatility, volatility_bmk],
             ['Draw-Down', max_drawdown, max_drawdown]] 
       
     # Create the pandas DataFrame 

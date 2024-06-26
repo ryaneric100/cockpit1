@@ -1,5 +1,5 @@
 import dash
-from dash import html
+from dash import html, dcc
 import dash_bootstrap_components as dbc
 
 app = dash.Dash(__name__, use_pages=True, external_stylesheets=[dbc.themes.LUX], suppress_callback_exceptions=True)  # COSMO  DARKLY
@@ -30,37 +30,69 @@ navbar = dbc.NavbarSimple(
 
 
 
-app.layout = dbc.Container([
 
-    # html.Hr(),
+# app.layout = dbc.Container([
+
     
-    # dbc.Row([
-    #     dbc.Col(
-    #     [
-    #         html.Img(src='assets/logo.png')
-    #     ], width=1
-    #     ),
-    #     dbc.Col(html.Div("Dufour Cockpit",
-    #                       style={'fontSize':25, 'textAlign':'left'})),
-
-    # ]),
+#     dcc.Interval(
+#     id='refresh-interval',
+#     interval=5*1000,  # Interval in milliseconds (5 seconds)
+#     n_intervals=0
+#     ),
+    
    
-   dbc.Row([
-       navbar
+#    dbc.Row([
+#        navbar
        
-       ]), 
+#        ]), 
    
-    dbc.Row(
-        [
-            dbc.Col(
-                [
-                    dash.page_container
-                ] )
-        ]
-    )
+#     dbc.Row(
+#         [
+#             dbc.Col(
+#                 [
+#                     dash.page_container
+#                 ] )
+#         ]
+#     )
 
   
-], fluid=True)
+# ], fluid=True)
+
+
+############################################################################
+
+
+def serve_layout():
+    layout = dbc.Container([
+
+        
+        # dcc.Interval(
+        # id='refresh-interval',
+        # interval=5*1000,  # Interval in milliseconds (5 seconds)
+        # n_intervals=0
+        # ),
+        
+       
+       dbc.Row([
+           navbar
+           
+           ]), 
+       
+        dbc.Row(
+            [
+                dbc.Col(
+                    [
+                        dash.page_container
+                    ] )
+            ]
+        )
+
+      
+    ], fluid=True)
+    return layout
+
+
+app.layout = serve_layout
 
 
 

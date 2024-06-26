@@ -34,6 +34,7 @@ import datetime as dt
 from datetime import date
 
 
+
 df = get_main_portfolio_df('dc_rs_short_ptf')
 df_seasonal = get_seasonal_table_from_df(df,2020)
 df_stats = get_stats_table_from_df(df)
@@ -42,12 +43,26 @@ df_positions = get_positions_from_df(df)
 df_alloc_historical = get_historical_allocations_from_df(df,'ASSET_CLASS')
 df_trades = get_trades_from_df(df)
 #df_contribution = get_contributions_from_df(df,'ASSET_CLASS')
-df_contribution = get_contributions_from_df(df,'TICKER','1Y')
+df_contribution = get_contributions_from_df(df,'TICKER','1M')
 
 
 df = get_main_portfolio_df('dc_ai_ptf')
 
 return_since_recent_entry, entry_dates = calculate_current_positions_return(df)
+
+
+
+
+
+
+df_prices = df['PTF_VAMI']
+
+
+
+
+
+
+
 
 
 
