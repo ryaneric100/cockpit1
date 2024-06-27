@@ -60,7 +60,7 @@ def update_value_postgre(value,row,col):
 
 
 
-update_value_postgre(20000, "/dc_rs_short_ptf","ytd")
+update_value_postgre(1000, "/dc_rs_short_ptf","ytd")
  
 
 

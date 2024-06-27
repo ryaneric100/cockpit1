@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+"""
+Created on June 2024
+
+@author: Ryan Held 
+"""
+
+
 import dash
 from dash import  html, callback, Output, Input
 import plotly.express as px

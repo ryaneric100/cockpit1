@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+"""
+Created on June 2024
+
+@author: Ryan Held 
+"""
+
+
 import dash
 from dash import  html, callback, Output, Input
 import dash_bootstrap_components as dbc
@@ -22,9 +30,9 @@ layout = html.Div(
         dbc.CardHeader(
             dbc.Tabs(
                 [
-                    dbc.Tab(label="ETF Portfolios2", tab_id="tab-etf"),
+                    dbc.Tab(label="Multi-Asset Portfolios", tab_id="tab-etf"),
                     dbc.Tab(label="Stock Portfolios", tab_id="tab-stocks"),
-                    dbc.Tab(label="Sub Portfolios", tab_id="sub-ptfs"),
+                    #dbc.Tab(label="Sub Portfolios", tab_id="sub-ptfs"),
                 ],
                 id="card-tabs2",
                 active_tab="tab-etf",
@@ -47,5 +55,5 @@ def render_content(active_tab):
         return overview_table_ag(1)  # overview_table1()
     elif active_tab == 'tab-stocks':
        return overview_table_ag(2)  # overview_table1()
-    elif active_tab == 'sub-ptfs':
-      return overview_table_ag(3)  # overview_table1()
+    # elif active_tab == 'sub-ptfs':
+    #   return overview_table_ag(3)  # overview_table1()

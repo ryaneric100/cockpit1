@@ -26,7 +26,7 @@ def get_trades_from_df(df):
             # Entry
             if current_row[position] != previous_row[position]:
                 all_trades.append({
-                    'Date': current_row.name,
+                    'Date': current_row.name.strftime('%Y-%m-%d') ,
                     'Name of Position': current_row[position],
                     'Type of Trade': 'Enter'
                 })
@@ -34,7 +34,7 @@ def get_trades_from_df(df):
             # Exit
             if previous_row[position] != current_row[position] and pd.notna(previous_row[position]):
                 all_trades.append({
-                    'Date': current_row.name,
+                    'Date': current_row.name.strftime('%Y-%m-%d') ,
                     'Name of Position': previous_row[position],
                     'Type of Trade': 'Exit'
                 })

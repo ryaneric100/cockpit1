@@ -1,5 +1,13 @@
+# -*- coding: utf-8 -*-
+"""
+Created on June 2024
+
+@author: Ryan Held 
+"""
+
+
 import dash
-from dash import  html, callback, Output, Input
+from dash import  html, callback, Output, Input, dcc, State
 import dash_bootstrap_components as dbc
 from  functions.trading import trading
 from  functions.positions import positions
@@ -8,6 +16,8 @@ from  functions.portfolio import portfolio
 from  functions.allocations import  allocations
 from  functions.contributions import contributions
 from functions.sql.get_main_portfolio_df import   get_main_portfolio_df
+from io import StringIO
+import pandas as pd
 
 
 # name of strategy
@@ -16,11 +26,9 @@ from functions.sql.get_main_portfolio_df import   get_main_portfolio_df
 #strat_name = 'dc_ai_ptf'
 strat_name = 'dc_rs_short_ptf'
 #strat_name = 'swiss_equity_plus_sli_ptf'
-max_exposure = 1
 
 
-#df = get_main_portfolio_df('dc_rs_short_ptf')
-df = get_main_portfolio_df(strat_name)
+
 
 dash.register_page(__name__,
                    path='/dc_rs_short_ptf',
@@ -31,45 +39,59 @@ dash.register_page(__name__,
 )
 
 
-layout = html.Div(    
-    [
-     
-   html.Hr(),  
-   html.H5('Portfolio xyz') ,
-     
- dbc.Card(
-    [
-        dbc.CardHeader(
-            dbc.Tabs(
-                [
-                    dbc.Tab(label="PORTFOLIO", tab_id="tab-ptf"),
-                    dbc.Tab(label="POSITIONS", tab_id="tab-positions"),
-                    dbc.Tab(label="STATISTICS", tab_id="tab-stats"),
-                    dbc.Tab(label="ALLOCATIONS", tab_id="tab-allocations"),
-                    dbc.Tab(label="CONTRIBUTIONS", tab_id="tab-contributions"),
-                    dbc.Tab(label="TRADING", tab_id="tab-trading"),
-                    dbc.Tab(label="RANKINGS", tab_id="tab-infos"),
-                    dbc.Tab(label="DATA", tab_id="tab-data"),
-                ],
-                id="card-tabs",
-                active_tab="tab-ptf",
-            )
+def page_layout():
+
+    df = get_main_portfolio_df(strat_name) 
+    
+    layout = html.Div([
+          
+      dcc.Store(id='data-store-df', data=df.to_json(orient='split')),
+        
+      html.Hr(),  
+      html.H5('Portfolio xyz') ,
+         
+      dbc.Card(
+        [
+            dbc.CardHeader(
+                dbc.Tabs(
+                    [
+                        dbc.Tab(label="PORTFOLIO", tab_id="tab-ptf"),
+                        dbc.Tab(label="POSITIONS", tab_id="tab-positions"),
+                        dbc.Tab(label="STATISTICS", tab_id="tab-stats"),
+                        dbc.Tab(label="ALLOCATIONS", tab_id="tab-allocations"),
+                        dbc.Tab(label="CONTRIBUTIONS", tab_id="tab-contributions"),
+                        dbc.Tab(label="TRADING", tab_id="tab-trading"),
+                        dbc.Tab(label="RANKINGS", tab_id="tab-infos"),
+                        dbc.Tab(label="DATA", tab_id="tab-data"),
+                    ],
+                    id="card-tabs",
+                    active_tab="tab-ptf",
+                )
+            ),
+            dbc.CardBody(html.P(id="card-content", className="card-text")),
+        ]
         ),
-        dbc.CardBody(html.P(id="card-content", className="card-text")),
-    ]
-    ),
-  
+     
+      ]
+    )
+    return layout
+
+
+layout = page_layout
+
  
- 
-  ]
-)
 
 
 @callback(
-    Output("card-content", "children"), [Input("card-tabs", "active_tab")]
+    Output("card-content", "children"), 
+    [Input("card-tabs", "active_tab")],
+    [State('data-store-df', 'data')]
 )
 
-def render_content(active_tab):
+def render_content(active_tab, json_data):
+    
+    json_data = StringIO(json_data)
+    df = pd.read_json(json_data, orient='split')
     
     #df = get_main_portfolio_df(strat_name)
     
@@ -86,4 +108,15 @@ def render_content(active_tab):
     elif active_tab == 'tab-trading':
         return trading(df)
     
+    
+    
+
+
+# @callback(Output('data-store-df', 'data'),
+#               [Input('url', 'pathname')])
+# def update_data(pathname):
+#     strat_name = 'dc_rs_short_ptf'
+#     df = get_main_portfolio_df(strat_name)
+#     return df.to_json(orient='split')
+   
     

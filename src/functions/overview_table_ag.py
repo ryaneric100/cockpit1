@@ -69,7 +69,7 @@ def overview_table_ag(flag):
         df.drop(['URL'], axis = 1, inplace = True)
     
         df['TRADE_ALERT'] = df['TRADE_ALERT'].apply(lambda x: '🔴' if x > 0 else ' ')
-        df['DATA_ALERT'] = df['DATA_ALERT'].apply(lambda x: '🔔' if x > 0 else ' ')
+        df['DATA_ALERT'] = df['DATA_ALERT'].apply(lambda x: '🔴' if x > 0 else ' ')
         
         print(df)
         
@@ -150,7 +150,7 @@ def overview_table_ag(flag):
             [
                   dag.AgGrid(
                   id="portfolio-grid_overview",
-                  #className="ag-theme-alpine-dark",
+                  className="ag-theme-alpine",
                   columnDefs=columnDefs,
                   rowData=df.to_dict("records"),
                   columnSize="sizeToFit",
@@ -170,5 +170,5 @@ def overview_table_ag(flag):
 def create_link(url:str,solution:str) -> str:
     return f'''<a href="{url}">{solution}</a> '''
 
-#  columnDefs=[{"headerName": i, "field": i, "cellRenderer": "markdown"} for i in df.columns],
+# columnDefs=[{"headerName": i, "field": i, "cellRenderer": "markdown"} for i in df.columns],
 # columnDefs=[{"headerName": i, "field": i, "cellRenderer": "markdown", "dangerously_allow_html":"True"} for i in df.columns],
