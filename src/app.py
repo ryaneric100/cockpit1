@@ -32,12 +32,6 @@ navbar = dbc.NavbarSimple(
 def serve_layout():
     layout = dbc.Container([
 
-        # dcc.Interval(
-        # id='refresh-interval',
-        # interval=5*1000,  # Interval in milliseconds (5 seconds)
-        # n_intervals=0
-        # ),
-       
        dbc.Row([
            navbar
            
@@ -70,36 +64,6 @@ if __name__ == "__main__":
 
 
 
-
-# app.layout = dbc.Container([
-
-    
-#     dcc.Interval(
-#     id='refresh-interval',
-#     interval=5*1000,  # Interval in milliseconds (5 seconds)
-#     n_intervals=0
-#     ),
-    
-   
-#    dbc.Row([
-#        navbar
-       
-#        ]), 
-   
-#     dbc.Row(
-#         [
-#             dbc.Col(
-#                 [
-#                     dash.page_container
-#                 ] )
-#         ]
-#     )
-
-  
-# ], fluid=True)
-
-
-############################################################################
 
 
 

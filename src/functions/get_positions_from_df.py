@@ -65,6 +65,24 @@ def get_positions_from_df(df):
    
    # note: as_index = FALSE - otherwise group col gets index, not ideal to generate pie chart out of df
    # df_positions  = df_alloc.groupby('POSITIONS', as_index=False).sum() 
+   
+   
+   
+    # Aggregate positions with the same ticker
+   df_aggregated = df_positions.groupby('TICKER').agg({
+     'POSITIONS': 'first',  # or 'first' or any other method to select a representative value
+     'WEIGHTS': 'sum',
+     'NAME': 'first',       # or 'first' or any other method to select a representative value
+     'ASSET_CLASS': 'first', # or 'first' or any other method to select a representative value
+     'ISIN': 'first',        # or 'first' or any other method to select a representative value
+     'RETURN_BUY': 'mean',   # or 'mean' or any other method to average the values
+     'DATE_BUY': 'first'     # or 'first' or any other method to select a representative value
+     }).reset_index()
       
    
-   return df_positions
+   #df_positions = df_aggregated
+   
+   df_sorted = df_aggregated.sort_values(by='ASSET_CLASS').reset_index(drop=True)
+   
+   
+   return df_sorted

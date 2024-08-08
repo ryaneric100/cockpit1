@@ -133,24 +133,31 @@ def update_chart(time_range,json_data):
         df =   df.iloc[-yr1:-1,:]
     elif time_range == '5y':
         df =   df.iloc[-yr5:-1,:]
+        
+        
+    initial_value   = 100;     
+    df.PTF_VAMI = (df.PTF_RET + 1).cumprod() * initial_value    
+    df.BMK_VAMI = (df.BMK_RET + 1).cumprod() * initial_value        
+        
 
     fig = go.Figure()
 
+    # PTF
     fig.add_trace(
         go.Scatter(x=list(df.index),
                    y=list(df.PTF_VAMI),
-                    name="close",
-                    line=dict(color="#2986CC")))
+                    name="Portfolio",
+                    line=dict(color="#00B0F0")))
     
-    # # BMK
-    # fig.add_trace(
-    #     go.Scatter(
-    #         x=list(df.index),
-    #         y=list(df.BMK_VAMI),
-    #         name="Second VAMI",  # Replace with the actual name for the legend
-    #         line=dict(color="#FF5733")  # Change color as needed
-    #     )
-    # )
+    # BMK
+    fig.add_trace(
+        go.Scatter(
+            x=list(df.index),
+            y=list(df.BMK_VAMI),
+            name="Benchmark",  # Replace with the actual name for the legend
+            line=dict(color="#B8B8B8")  # Change color as needed
+        )
+    )
         
     
     return fig

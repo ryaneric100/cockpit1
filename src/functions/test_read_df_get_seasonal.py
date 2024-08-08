@@ -35,7 +35,7 @@ from datetime import date
 
 
 
-df = get_main_portfolio_df('dc_rs_short_ptf')
+df = get_main_portfolio_df('dc_protect')
 df_seasonal = get_seasonal_table_from_df(df,2020)
 df_stats = get_stats_table_from_df(df)
 df_alloc = get_current_allocation_from_df(df,'ASSET_CLASS')

@@ -41,7 +41,13 @@ def get_trades_from_df(df):
     
     # Create a DataFrame from the list of trades
     trades_df = pd.DataFrame(all_trades)
-      
+    
+   # df_sorted = trades_df.sort_index(ascending=False).reset_index(drop=True)
+    #trades_df = trades_df.reindex(index=trades_df.index[::-1]).reset_index(drop=True)
+    
+    trades_df = trades_df.loc[::-1].reset_index(drop=True)
+    
+    
     return trades_df
 
 

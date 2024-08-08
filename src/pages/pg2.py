@@ -30,8 +30,8 @@ layout = html.Div(
         dbc.CardHeader(
             dbc.Tabs(
                 [
-                    dbc.Tab(label="Multi-Asset Portfolios", tab_id="tab-etf"),
-                    dbc.Tab(label="Stock Portfolios", tab_id="tab-stocks"),
+                    dbc.Tab(label="Portfolios", tab_id="tab-etf"),
+                    dbc.Tab(label="Portfolio Module", tab_id="tab-stocks"),
                     #dbc.Tab(label="Sub Portfolios", tab_id="sub-ptfs"),
                 ],
                 id="card-tabs2",

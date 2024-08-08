@@ -70,6 +70,7 @@ def overview_table_ag(flag):
     
         df['TRADE_ALERT'] = df['TRADE_ALERT'].apply(lambda x: '🔴' if x > 0 else ' ')
         df['DATA_ALERT'] = df['DATA_ALERT'].apply(lambda x: '🔴' if x > 0 else ' ')
+
         
         print(df)
         
@@ -108,6 +109,7 @@ def overview_table_ag(flag):
                 "headerName": "YTD (%)",
                 "field": "YTD",
                 "type": "centerAligned",
+                "valueFormatter": {"function": "d3.format('.1%')(params.value)"},
                 
                
             },
@@ -136,14 +138,14 @@ def overview_table_ag(flag):
                 "cellRenderer": "markdown",
                 "type": "centerAligned",
             },
-            {
-                "headerName": "Data Alert",
-                "field": "DATA_ALERT",
-                "cellRenderer": "markdown",
-                #"dangerously_allow_html": True,
-                "type": "centerAligned",
+            # {
+            #     "headerName": "Data Alert",
+            #     "field": "DATA_ALERT",
+            #     "cellRenderer": "markdown",
+            #     #"dangerously_allow_html": True,
+            #     "type": "centerAligned",
 
-            },
+            # },
         ]
         
         test =  html.Div(
@@ -158,7 +160,7 @@ def overview_table_ag(flag):
                   #cellStyle=cellStyle,
                   dangerously_allow_code=True,
                   dashGridOptions={"undoRedoCellEditing": True, "rowSelection": "single", "pagination": True,"paginationAutoPageSize":True},
-                 style = {"height": "800px", "width": "100%"}
+                  style = {"height": "800px", "width": "100%"}
               )
              
                                             

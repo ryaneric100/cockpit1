@@ -94,10 +94,14 @@ def get_stats_table_from_df(df):
     # create a dummy dataframe: 
     
     # initialize list of lists 
+    # data = [['YTD', ytd_return,ytd_return_bmk], ['MTD', mtd_return, mtd_return_bmk], 
+    #         ['Start', return_since_start, return_since_start_bmk],
+    #         ['Volatility', volatility, volatility_bmk],
+    #         ['Draw-Down', max_drawdown, max_drawdown]] 
+    
     data = [['YTD', ytd_return,ytd_return_bmk], ['MTD', mtd_return, mtd_return_bmk], 
-            ['Start', return_since_start, return_since_start_bmk],
-            ['Volatility', volatility, volatility_bmk],
-            ['Draw-Down', max_drawdown, max_drawdown]] 
+            ['Volatility', volatility, volatility_bmk]] 
+    
       
     # Create the pandas DataFrame 
     stats_df = pd.DataFrame(data, columns=['Stat', 'Ptf', 'BMK']) 
