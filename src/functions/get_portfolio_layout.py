@@ -22,12 +22,14 @@ def get_portfolio_layout(strat_name):
 
     df = get_main_portfolio_df(strat_name) 
     
+    page_title = strat_name.replace('_', ' ').upper()
+    
     layout = html.Div([
           
       dcc.Store(id='data-store-df', data=df.to_json(orient='split')),
         
       html.Hr(),  
-      html.H5('Portfolio xyz') ,
+      html.H5(page_title) ,
          
       dbc.Card(
         [
